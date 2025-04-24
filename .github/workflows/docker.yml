@@ -3,7 +3,7 @@ name: Build, Push and Scan Docker Image
 on:
   push:
     branches:
-      - feature/cicd
+      - '*'
 
 jobs:
   docker:
