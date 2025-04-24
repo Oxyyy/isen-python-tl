@@ -15,7 +15,10 @@ jobs:
       - name: Generate SBOM from project directory
         uses: anchore/sbom-action@v0
         with:
-          source: dir:.
+          source: |
+            sbom.syft.json
+            sbom.cyclonedx.json
+          retention-days: 90
 
 
   sbom-scan:
