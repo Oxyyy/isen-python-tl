@@ -19,6 +19,16 @@ jobs:
             format: syft-json
             output-file: sbom.syft.json
 
+        - name: Upload SBOM files
+          uses: actions/upload-artifact@v4
+          with:
+            name: sbom-files
+            path: |
+              sbom.syft.json
+              sbom.cyclonedx.json
+            retention-days: 90
+
+
   sbom-scan:
     name: Scan SBOM with Grype
     runs-on: ubuntu-latest
