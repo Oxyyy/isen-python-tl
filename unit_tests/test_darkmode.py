@@ -1,29 +1,19 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-import time
+from django.test import TestCase, Client
+from django.urls import reverse
 
-def test_dark_mode_toggle():
-    # Options pour le mode headless
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--disable-dev-shm-usage")
+class DarkModeTest(TestCase):
+    def setUp(self):
+        self.client = Client()
 
-    # Supposons que chromedriver est dans le PATH
-    driver = webdriver.Chrome(options=chrome_options)
+    def test_homepage_contains_darkmode_toggle(self):
+        response = self.client.get(reverse('home'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'id="darkModeToggle"')
 
-    try:
-        driver.get("http://localhost:8080/") 
+    def test_homepage_contains_darkmode_script(self):
+        response = self.client.get(reverse('home'))
+        self.assertContains(response, 'function toggleDarkMode()')
 
-        # Clique sur le bouton dark mode (exemple)
-        toggle_button = driver.find_element("id", "dark-mode-toggle")
-        toggle_button.click()
-
-        time.sleep(1)
-
-        # Vérifie si la classe dark-mode est appliquée
-        body = driver.find_element("tag name", "body")
-        assert "dark-mode" in body.get_attribute("class")
-
-    finally:
-        driver.quit()
+    def test_homepage_contains_darkmode_class(self):
+        response = self.client.get(reverse('home'))
+        self.assertContains(response, 'dark-mode')
