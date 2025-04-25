@@ -12,7 +12,7 @@ class DarkModeTest(TestCase):
 
     def test_homepage_contains_darkmode_script(self):
         response = self.client.get(reverse('home'))
-        self.assertContains(response, 'function toggleDarkMode()')
+        self.assertContains(response, 'function setDarkMode()')
 
     def test_homepage_contains_darkmode_class(self):
         response = self.client.get(reverse('home'))
