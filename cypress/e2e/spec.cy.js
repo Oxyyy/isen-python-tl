@@ -72,14 +72,7 @@ describe('Toggle Dark Mode', () => {
     cy.contains('Log in').click()
     cy.contains('Dark Mode').click()
     cy.contains('Light Mode').click()
-    //make sure there is no favourite
-    //check it has been deleted
-
-    // You will go to favourite pages to make sure there is no favourite
-    // Then go back to home
-    // You will add an item to favourite
-    // You will go to favourite pages to confirm item is here
-    // You will then delete the item an check it has been successfully deleted
+    
 
   })
 })
