@@ -42,8 +42,9 @@ jobs:
       - name: Deploy to Google Cloud Run
         uses: google-github-actions/deploy-cloudrun@v2
         with:
-          service: isen-python-auto
+          service: isen-python-app
           image: europe-west1-docker.pkg.dev/stellar-stream-458207-t8/isen-python-app/isen-python:latest
           region: europe-west1
-          project_id: cybernetic-muse-458208-f7
+          allow-unauthenticated: true
+          # project_id: cybernetic-muse-458208-f7
       
