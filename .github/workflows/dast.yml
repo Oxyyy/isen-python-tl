@@ -1,0 +1,29 @@
+name: DAST
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  zap-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Build and run app in Docker
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/isen-python:dev-${{ github.sha }} .
+          docker run -d -it -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/isen-python:dev-${{ github.sha }} 
+          sleep 10   
+
+      - name: Run DAST
+        uses: zaproxy/action-baseline@v0.14.0
+        with:
+            target: 'http://localhost:8080'
+            fail_action: false
