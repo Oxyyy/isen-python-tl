@@ -21,6 +21,11 @@ jobs:
       #     docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/isen-python:dev-${{ github.sha }} .
       #     docker run -d -it -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/isen-python:dev-${{ github.sha }} 
       #     sleep 10   
+      - name: Run Django app in background
+        run: |
+          python manage.py migrate
+          python manage.py runserver 0.0.0.0:8080 &
+          sleep 10
 
       - name: Run DAST
         uses: zaproxy/action-baseline@v0.14.0
